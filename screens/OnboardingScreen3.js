@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import PropTypes from 'prop-types';
 
 const OnboardingScreen3 = ({ navigation }) => {
   const completeOnboarding = async () => {
@@ -16,54 +16,78 @@ const OnboardingScreen3 = ({ navigation }) => {
   
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Distraction-free Learning</Text>
-        <Text style={styles.subtitle}>No app to open, just notifications</Text>
+      <View style={styles.wrapper}>
+        {/* Page indicator */}
+        <View style={styles.pageIndicator}>
+          <View style={styles.pageIndicatorDot} />
+          <View style={styles.pageIndicatorDot} />
+          <View style={[styles.pageIndicatorDot, styles.pageIndicatorActive]} />
+        </View>
         
-        <View style={styles.featureContainer}>
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🔔</Text>
-            <View style={styles.featureTextContainer}>
-              <Text style={styles.featureTitle}>Push Notifications</Text>
-              <Text style={styles.featureDescription}>Receive new words directly on your device</Text>
+        <Text style={styles.headline}>Distraction-free Learning</Text>
+        
+        {/* Features */}
+        <View style={styles.featuresContainer}>
+          <View style={styles.featureCard}>
+            <View style={styles.featureIcon}>
+              <Text style={styles.featureEmoji}>🔔</Text>
+            </View>
+            <View style={styles.featureContent}>
+              <Text style={styles.featureTitle}>Daily Notifications</Text>
+              <Text style={styles.featureDescription}>
+                Words delivered straight to your device. No need to open the app.
+              </Text>
             </View>
           </View>
           
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>📚</Text>
-            <View style={styles.featureTextContainer}>
-              <Text style={styles.featureTitle}>SAT-level Vocabulary</Text>
-              <Text style={styles.featureDescription}>Words hand-picked to boost your SAT score</Text>
+          <View style={styles.featureCard}>
+            <View style={styles.featureIcon}>
+              <Text style={styles.featureEmoji}>📚</Text>
+            </View>
+            <View style={styles.featureContent}>
+              <Text style={styles.featureTitle}>Expert-Curated Words</Text>
+              <Text style={styles.featureDescription}>
+                Carefully selected SAT vocabulary to boost your score effectively.
+              </Text>
             </View>
           </View>
           
-          <View style={styles.feature}>
-            <Text style={styles.featureIcon}>🧠</Text>
-            <View style={styles.featureTextContainer}>
-              <Text style={styles.featureTitle}>Effortless Learning</Text>
-              <Text style={styles.featureDescription}>Just 3 words daily for maximum retention</Text>
+          <View style={styles.featureCard}>
+            <View style={styles.featureIcon}>
+              <Text style={styles.featureEmoji}>⏰</Text>
+            </View>
+            <View style={styles.featureContent}>
+              <Text style={styles.featureTitle}>Time-Efficient</Text>
+              <Text style={styles.featureDescription}>
+                Learn new words without disrupting your routine or schedule.
+              </Text>
             </View>
           </View>
         </View>
         
-        <Text style={styles.description}>
-          Word3 is designed to be minimalist. You'll receive vocabulary through notifications, without needing to open the app every day.
-        </Text>
-      </View>
-      
-      <View style={styles.footer}>
-        <TouchableOpacity 
-          style={styles.secondaryButton} 
-          onPress={() => navigation.navigate('Onboarding2')}
-        >
-          <Text style={styles.secondaryButtonText}>Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.button} 
-          onPress={completeOnboarding}
-        >
-          <Text style={styles.buttonText}>Get Started</Text>
-        </TouchableOpacity>
+        {/* Information box */}
+        <View style={styles.infoBox}>
+          <Text style={styles.infoText}>
+            Word3 uses a science-based approach to vocabulary learning. Small, consistent exposure leads to better retention.
+          </Text>
+        </View>
+        
+        {/* Navigation buttons */}
+        <View style={styles.navigationContainer}>
+          <TouchableOpacity 
+            style={styles.backButton} 
+            onPress={() => navigation.navigate('Onboarding2')}
+          >
+            <Text style={styles.backButtonText}>Back</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.startButton} 
+            onPress={completeOnboarding}
+          >
+            <Text style={styles.startButtonText}>Get Started</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -72,96 +96,124 @@ const OnboardingScreen3 = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FCFCFC',
   },
-  content: {
+  wrapper: {
     flex: 1,
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    justifyContent: 'center',
+    padding: 32,
+    justifyContent: 'space-between',
   },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-    color: '#333',
-  },
-  subtitle: {
-    fontSize: 18,
-    marginBottom: 30,
-    textAlign: 'center',
-    color: '#666',
-  },
-  featureContainer: {
-    width: '100%',
-    marginVertical: 30,
-  },
-  feature: {
+  pageIndicator: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
+    justifyContent: 'center',
+    marginBottom: 40,
+  },
+  pageIndicatorDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#D1D5DB',
+    marginHorizontal: 6,
+  },
+  pageIndicatorActive: {
+    backgroundColor: '#4A6FA5',
+    width: 16,
+  },
+  headline: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1F2937',
+    textAlign: 'center',
+    marginBottom: 40,
+  },
+  featuresContainer: {
+    marginBottom: 40,
+  },
+  featureCard: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    marginBottom: 24,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
   },
   featureIcon: {
-    fontSize: 32,
-    marginRight: 15,
-    width: 50,
-    textAlign: 'center',
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    backgroundColor: '#EBF2FF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
   },
-  featureTextContainer: {
+  featureEmoji: {
+    fontSize: 24,
+  },
+  featureContent: {
     flex: 1,
   },
   featureTitle: {
     fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 5,
+    fontWeight: '600',
+    color: '#1F2937',
+    marginBottom: 4,
   },
   featureDescription: {
     fontSize: 14,
-    color: '#666',
+    color: '#6B7280',
+    lineHeight: 20,
   },
-  description: {
-    fontSize: 16,
+  infoBox: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 40,
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#4B5563',
     textAlign: 'center',
-    marginBottom: 20,
-    color: '#666',
-    lineHeight: 24,
+    lineHeight: 22,
   },
-  footer: {
-    padding: 20,
+  navigationContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  button: {
-    backgroundColor: '#4A6FA5',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 30,
     alignItems: 'center',
-    flex: 1,
-    marginLeft: 10,
+    marginTop: 16,
   },
-  buttonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  secondaryButton: {
-    backgroundColor: '#fff',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 30,
-    alignItems: 'center',
-    flex: 1,
-    marginRight: 10,
+  backButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
   },
-  secondaryButtonText: {
-    color: '#666',
-    fontSize: 16,
-    fontWeight: 'bold',
+  backButtonText: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#6B7280',
+  },
+  startButton: {
+    backgroundColor: '#4A6FA5',
+    paddingVertical: 14,
+    paddingHorizontal: 36,
+    borderRadius: 12,
+    alignItems: 'center',
+    shadowColor: '#4A6FA5',
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 4 },
+  },
+  startButtonText: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '600',
   },
 });
 

@@ -1,48 +1,73 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import PropTypes from 'prop-types';
+import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const OnboardingScreen2 = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>3 New Words Daily</Text>
-        <Text style={styles.subtitle}>Just the right amount to remember</Text>
+      <View style={styles.wrapper}>
+        {/* Page indicator */}
+        <View style={styles.pageIndicator}>
+          <View style={styles.pageIndicatorDot} />
+          <View style={[styles.pageIndicatorDot, styles.pageIndicatorActive]} />
+          <View style={styles.pageIndicatorDot} />
+        </View>
         
-        <View style={styles.imageContainer}>
-          <View style={styles.wordContainer}>
-            <Text style={styles.word}>Ephemeral</Text>
-            <Text style={styles.definition}>Lasting for a very short time</Text>
+        <Text style={styles.headline}>3 Words Daily</Text>
+        
+        {/* Word examples with highlight effect */}
+        <View style={styles.examplesContainer}>
+          <View style={styles.wordExample}>
+            <View style={styles.wordBadge}>
+              <Text style={styles.wordNumber}>1</Text>
+            </View>
+            <View style={styles.wordContent}>
+              <Text style={styles.wordTitle}>Ephemeral</Text>
+              <Text style={styles.wordDescription}>Lasting for a very short time</Text>
+            </View>
           </View>
-          <View style={styles.wordContainer}>
-            <Text style={styles.word}>Tenacious</Text>
-            <Text style={styles.definition}>Tending to keep a firm hold of something</Text>
+          
+          <View style={styles.wordExample}>
+            <View style={styles.wordBadge}>
+              <Text style={styles.wordNumber}>2</Text>
+            </View>
+            <View style={styles.wordContent}>
+              <Text style={styles.wordTitle}>Tenacious</Text>
+              <Text style={styles.wordDescription}>Tending to keep a firm hold of something</Text>
+            </View>
           </View>
-          <View style={styles.wordContainer}>
-            <Text style={styles.word}>Versatile</Text>
-            <Text style={styles.definition}>Able to adapt to many different functions or situations</Text>
+          
+          <View style={styles.wordExample}>
+            <View style={styles.wordBadge}>
+              <Text style={styles.wordNumber}>3</Text>
+            </View>
+            <View style={styles.wordContent}>
+              <Text style={styles.wordTitle}>Versatile</Text>
+              <Text style={styles.wordDescription}>Able to adapt to many different functions or situations</Text>
+            </View>
           </View>
         </View>
         
-        <Text style={styles.description}>
-          We'll send you three carefully selected SAT-level words every day as notifications.
-        </Text>
-      </View>
-      
-      <View style={styles.footer}>
-        <TouchableOpacity 
-          style={styles.secondaryButton} 
-          onPress={() => navigation.navigate('Onboarding1')}
-        >
-          <Text style={styles.secondaryButtonText}>Back</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-          style={styles.button} 
-          onPress={() => navigation.navigate('Onboarding3')}
-        >
-          <Text style={styles.buttonText}>Next</Text>
-        </TouchableOpacity>
+        <View style={styles.infoBox}>
+          <Text style={styles.infoText}>Just enough words for optimal retention. Not too few, not too many.</Text>
+        </View>
+        
+        {/* Navigation buttons */}
+        <View style={styles.navigationContainer}>
+          <TouchableOpacity 
+            style={styles.backButton} 
+            onPress={() => navigation.navigate('Onboarding1')}
+          >
+            <Text style={styles.backButtonText}>Back</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity 
+            style={styles.nextButton} 
+            onPress={() => navigation.navigate('Onboarding3')}
+          >
+            <Text style={styles.nextButtonText}>Next</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -51,97 +76,127 @@ const OnboardingScreen2 = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FCFCFC',
   },
-  content: {
+  wrapper: {
     flex: 1,
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    textAlign: 'center',
-    color: '#333',
-  },
-  subtitle: {
-    fontSize: 18,
-    marginBottom: 30,
-    textAlign: 'center',
-    color: '#666',
-  },
-  imageContainer: {
-    width: '90%',
-    marginVertical: 30,
-  },
-  wordContainer: {
-    backgroundColor: '#F5F7FA',
-    padding: 15,
-    borderRadius: 12,
-    marginBottom: 15,
-    borderLeftWidth: 5,
-    borderLeftColor: '#4A6FA5',
-  },
-  word: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 5,
-  },
-  definition: {
-    fontSize: 14,
-    color: '#666',
-  },
-  description: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#666',
-    lineHeight: 24,
-  },
-  footer: {
-    padding: 20,
-    flexDirection: 'row',
+    padding: 32,
     justifyContent: 'space-between',
   },
-  button: {
+  pageIndicator: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 40,
+  },
+  pageIndicatorDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#D1D5DB',
+    marginHorizontal: 6,
+  },
+  pageIndicatorActive: {
     backgroundColor: '#4A6FA5',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 30,
-    alignItems: 'center',
-    flex: 1,
-    marginLeft: 10,
+    width: 16,
   },
-  buttonText: {
-    color: '#fff',
+  headline: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#1F2937',
+    textAlign: 'center',
+    marginBottom: 40,
+  },
+  examplesContainer: {
+    marginBottom: 30,
+  },
+  wordExample: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 20,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 2,
+  },
+  wordBadge: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: '#EBF2FF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
+  },
+  wordNumber: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: '600',
+    color: '#4A6FA5',
   },
-  secondaryButton: {
-    backgroundColor: '#fff',
-    paddingVertical: 15,
-    paddingHorizontal: 40,
-    borderRadius: 30,
-    alignItems: 'center',
+  wordContent: {
     flex: 1,
-    marginRight: 10,
+  },
+  wordTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#1F2937',
+    marginBottom: 4,
+  },
+  wordDescription: {
+    fontSize: 14,
+    color: '#6B7280',
+    lineHeight: 20,
+  },
+  infoBox: {
+    backgroundColor: '#F3F4F6',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 40,
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#4B5563',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+  navigationContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 16,
+  },
+  backButton: {
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#E5E7EB',
+    backgroundColor: '#FFFFFF',
   },
-  secondaryButtonText: {
-    color: '#666',
-    fontSize: 16,
-    fontWeight: 'bold',
+  backButtonText: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#6B7280',
+  },
+  nextButton: {
+    backgroundColor: '#4A6FA5',
+    paddingVertical: 14,
+    paddingHorizontal: 36,
+    borderRadius: 12,
+    alignItems: 'center',
+    shadowColor: '#4A6FA5',
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 4 },
+  },
+  nextButtonText: {
+    color: '#fff',
+    fontSize: 15,
+    fontWeight: '600',
   },
 });
-
-OnboardingScreen2.propTypes = {
-  navigation: PropTypes.shape({
-    navigate: PropTypes.func.isRequired
-  }).isRequired
-};
 
 export default OnboardingScreen2;

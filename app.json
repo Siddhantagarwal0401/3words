@@ -38,6 +38,9 @@
       "eas": {
         "projectId": "word3-sat-vocabulary"
       }
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

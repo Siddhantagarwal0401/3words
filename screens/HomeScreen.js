@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert, ActivityIndicator, BackHandler } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Notifications from 'expo-notifications';
+import PropTypes from 'prop-types';
 import { registerForPushNotificationsAsync, sendTestWordNotification, scheduleDailyWordNotifications } from '../utils/notificationHelper';
 import satVocabulary from '../utils/wordsList';
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
   const [expoPushToken, setExpoPushToken] = useState('');
   const [notification, setNotification] = useState(false);
   const [todaysWords, setTodaysWords] = useState([]);
@@ -40,11 +41,29 @@ const HomeScreen = () => {
     };
 
     setupNotifications();
+    
+    // Handle back button press
+    const backAction = () => {
+      Alert.alert(
+        'Exit App', 
+        'Are you sure you want to exit?', 
+        [
+          { text: 'Cancel', onPress: () => null, style: 'cancel' },
+          { text: 'Yes', onPress: () => BackHandler.exitApp() }
+        ],
+        { cancelable: true }
+      );
+      return true; // Prevent default back behavior
+    };
+    
+    // Add back button listener
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
 
     // Cleanup listeners on unmount
     return () => {
       Notifications.removeNotificationSubscription(notificationListener.current);
       Notifications.removeNotificationSubscription(responseListener.current);
+      backHandler.remove(); // Remove back button listener
     };
   }, []);
 
@@ -241,5 +260,12 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
   },
 });
+
+HomeScreen.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func.isRequired,
+    addListener: PropTypes.func.isRequired
+  }).isRequired
+};
 
 export default HomeScreen;
