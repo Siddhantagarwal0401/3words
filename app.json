@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "3words",
+    "name": "Word3",
     "slug": "3words",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -12,18 +12,32 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "notification": {
+      "icon": "./assets/icon.png",
+      "color": "#4A6FA5",
+      "androidMode": "default",
+      "androidCollapsedTitle": "Word3 Vocabulary",
+      "iosDisplayInForeground": true
+    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.word3.vocabulary"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "package": "com.word3.vocabulary",
       "edgeToEdgeEnabled": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "word3-sat-vocabulary"
+      }
     }
   }
 }
